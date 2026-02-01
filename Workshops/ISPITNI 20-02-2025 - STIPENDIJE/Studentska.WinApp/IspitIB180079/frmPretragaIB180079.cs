@@ -1,5 +1,6 @@
 using DLWMS.Data.IspitIB180079;
 using Studentska.Data.IspitIB180079;
+using Studentska.Servis;
 using Studentska.Servis.Servisi;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ namespace Studentska.WinApp.IspitIB180079
     {
         StipendijeGodineServis stipendijeGodineServis = new StipendijeGodineServis();
         StudentiStipendijeServis studentiStipendijeServis = new StudentiStipendijeServis();
+
+        SpolServis spolServis = new SpolServis();
+
+
         public frmPretragaIB180079()
         {
             InitializeComponent();
@@ -27,6 +32,12 @@ namespace Studentska.WinApp.IspitIB180079
             dgvStudentiStipendije.AutoGenerateColumns = false;
 
             cbGodina.SelectedIndex = 0;
+
+
+            //                  db.Spolovi.ToList();
+            cbSpol.DataSource = spolServis.GetAll();
+
+
         }
 
         private void cbGodina_SelectedIndexChanged(object sender, EventArgs e)
@@ -36,23 +47,20 @@ namespace Studentska.WinApp.IspitIB180079
 
             //var stipendijeGodine = stipendijeGodineServis.GetAllIncludedWithFilter(odabranaGodina);
 
-            var stipendijeGodine = stipendijeGodineServis.GetAllIncluded()
+            cbStipendijaGodina.DataSource = stipendijeGodineServis.GetAllIncluded()
                 .Where(x => x.Godina == odabranaGodina)
                 .ToList();
 
-            cbStipendijaGodina.DataSource = stipendijeGodine;
 
+            //if (stipendijeGodine.Count() == 0)
+            //{
+            //    cbStipendijaGodina.DataSource = null;
 
+            //    Text = "Broj prikazanih studenata: 0";
 
-            if (stipendijeGodine.Count() == 0)
-            {
-                cbStipendijaGodina.DataSource = null;
+            //    MessageBox.Show($"U bazi nisu evidentirani studenti kojima je u {odabranaGodina} godini", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                Text = "Broj prikazanih studenata: 0";
-
-                MessageBox.Show($"U bazi nisu evidentirani studenti kojima je u {odabranaGodina} godini", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-            }
+            //}
 
 
 
@@ -67,8 +75,14 @@ namespace Studentska.WinApp.IspitIB180079
         {
             var odabranaStudentStipendija = cbStipendijaGodina.SelectedItem as StipendijeGodineIB180079;
 
+            var aktivan = chbAktivan.Checked;
 
-            var studentStipendije = studentiStipendijeServis.GetAllIncludedWithFilter(odabranaStudentStipendija.Id);
+
+            var studentStipendije = studentiStipendijeServis.GetAllIncluded()
+                .Where(x => x.StipendijaGodinaId == odabranaStudentStipendija.Id)
+                .Where(x => x.Student.Aktivan == aktivan)
+                .ToList();
+
 
             if (studentStipendije != null)
             {
@@ -90,21 +104,26 @@ namespace Studentska.WinApp.IspitIB180079
 
         private void dgvStudentiStipendije_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex == 5)
+            if (e.ColumnIndex == 7)
             {
 
-                if (MessageBox.Show("Da li ste sigurni da želite obrisati odabrani zapis ?","Pitanje",MessageBoxButtons.OKCancel,MessageBoxIcon.Question) == DialogResult.OK)
+                if (MessageBox.Show("Da li ste sigurni da želite obrisati odabrani zapis ?", "Pitanje", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
 
                     var odabanaStudentStipendija = dgvStudentiStipendije.SelectedRows[0].DataBoundItem as StudentiStipendijeIB180079;
 
-                    studentiStipendijeServis.Delete(odabanaStudentStipendija);
+                    studentiStipendijeServis.Remove(odabanaStudentStipendija);
 
                     UcitajStudentStipendije();
 
                 }
 
             }
+        }
+
+        private void chbAktivan_CheckedChanged(object sender, EventArgs e)
+        {
+            UcitajStudentStipendije();
         }
     }
 }

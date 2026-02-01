@@ -1,4 +1,5 @@
-﻿using Studentska.Data.IspitIB180079;
+﻿using Microsoft.EntityFrameworkCore;
+using Studentska.Data.IspitIB180079;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,8 @@ namespace Studentska.Servis.Servisi
 {
     public class StipendijeServis : BaseServis<StipendijeIB180079>
     {
+
+
+
     }
 }

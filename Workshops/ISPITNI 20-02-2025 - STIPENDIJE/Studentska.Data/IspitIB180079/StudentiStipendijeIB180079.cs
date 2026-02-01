@@ -17,7 +17,8 @@ namespace DLWMS.Data.IspitIB180079
         public int StipendijaGodinaId { get; set; }
         public StipendijeGodineIB180079 StipendijaGodina { get; set; }
 
-
+        public bool AktivanInfo => Student?.Aktivan ?? false;
+        public byte[] SlikaInfo => Student.Slika;
         public string GodinaInfo => StipendijaGodina?.Godina ?? "N/A";
         public int IznosInfo => StipendijaGodina?.Iznos ?? 0;
         public string StipendijaInfo => StipendijaGodina?.Stipendija?.Naziv ?? "N/A";

@@ -33,12 +33,17 @@
             cbGodina = new ComboBox();
             cbStipendijaGodina = new ComboBox();
             dgvStudentiStipendije = new DataGridView();
+            SlikaInfo = new DataGridViewImageColumn();
             Student = new DataGridViewTextBoxColumn();
+            AktivanInfo = new DataGridViewCheckBoxColumn();
             GodinaInfo = new DataGridViewTextBoxColumn();
             StipendijaInfo = new DataGridViewTextBoxColumn();
             IznosInfo = new DataGridViewTextBoxColumn();
             UkupnoInfo = new DataGridViewTextBoxColumn();
             Ukloni = new DataGridViewButtonColumn();
+            chbAktivan = new CheckBox();
+            label3 = new Label();
+            cbSpol = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dgvStudentiStipendije).BeginInit();
             SuspendLayout();
             // 
@@ -86,15 +91,25 @@
             dgvStudentiStipendije.AllowUserToAddRows = false;
             dgvStudentiStipendije.AllowUserToDeleteRows = false;
             dgvStudentiStipendije.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvStudentiStipendije.Columns.AddRange(new DataGridViewColumn[] { Student, GodinaInfo, StipendijaInfo, IznosInfo, UkupnoInfo, Ukloni });
+            dgvStudentiStipendije.Columns.AddRange(new DataGridViewColumn[] { SlikaInfo, Student, AktivanInfo, GodinaInfo, StipendijaInfo, IznosInfo, UkupnoInfo, Ukloni });
             dgvStudentiStipendije.Location = new Point(12, 66);
             dgvStudentiStipendije.Name = "dgvStudentiStipendije";
             dgvStudentiStipendije.ReadOnly = true;
             dgvStudentiStipendije.RowHeadersWidth = 51;
             dgvStudentiStipendije.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvStudentiStipendije.Size = new Size(1163, 363);
+            dgvStudentiStipendije.Size = new Size(1279, 363);
             dgvStudentiStipendije.TabIndex = 2;
             dgvStudentiStipendije.CellContentClick += dgvStudentiStipendije_CellContentClick;
+            // 
+            // SlikaInfo
+            // 
+            SlikaInfo.DataPropertyName = "SlikaInfo";
+            SlikaInfo.HeaderText = "Slika";
+            SlikaInfo.ImageLayout = DataGridViewImageCellLayout.Stretch;
+            SlikaInfo.MinimumWidth = 6;
+            SlikaInfo.Name = "SlikaInfo";
+            SlikaInfo.ReadOnly = true;
+            SlikaInfo.Width = 50;
             // 
             // Student
             // 
@@ -104,6 +119,15 @@
             Student.MinimumWidth = 6;
             Student.Name = "Student";
             Student.ReadOnly = true;
+            // 
+            // AktivanInfo
+            // 
+            AktivanInfo.DataPropertyName = "AktivanInfo";
+            AktivanInfo.HeaderText = "Aktivan";
+            AktivanInfo.MinimumWidth = 6;
+            AktivanInfo.Name = "AktivanInfo";
+            AktivanInfo.ReadOnly = true;
+            AktivanInfo.Width = 125;
             // 
             // GodinaInfo
             // 
@@ -151,11 +175,43 @@
             Ukloni.UseColumnTextForButtonValue = true;
             Ukloni.Width = 125;
             // 
+            // chbAktivan
+            // 
+            chbAktivan.AutoSize = true;
+            chbAktivan.Location = new Point(514, 34);
+            chbAktivan.Name = "chbAktivan";
+            chbAktivan.Size = new Size(80, 24);
+            chbAktivan.TabIndex = 3;
+            chbAktivan.Text = "Aktivan";
+            chbAktivan.UseVisualStyleBackColor = true;
+            chbAktivan.CheckedChanged += chbAktivan_CheckedChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(624, 9);
+            label3.Name = "label3";
+            label3.Size = new Size(42, 20);
+            label3.TabIndex = 4;
+            label3.Text = "Spol:";
+            // 
+            // cbSpol
+            // 
+            cbSpol.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbSpol.FormattingEnabled = true;
+            cbSpol.Location = new Point(624, 34);
+            cbSpol.Name = "cbSpol";
+            cbSpol.Size = new Size(241, 28);
+            cbSpol.TabIndex = 5;
+            // 
             // frmPretragaIB180079
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1182, 437);
+            ClientSize = new Size(1303, 437);
+            Controls.Add(cbSpol);
+            Controls.Add(label3);
+            Controls.Add(chbAktivan);
             Controls.Add(dgvStudentiStipendije);
             Controls.Add(cbStipendijaGodina);
             Controls.Add(cbGodina);
@@ -176,11 +232,16 @@
         private ComboBox cbGodina;
         private ComboBox cbStipendijaGodina;
         private DataGridView dgvStudentiStipendije;
+        private DataGridViewImageColumn SlikaInfo;
         private DataGridViewTextBoxColumn Student;
+        private DataGridViewCheckBoxColumn AktivanInfo;
         private DataGridViewTextBoxColumn GodinaInfo;
         private DataGridViewTextBoxColumn StipendijaInfo;
         private DataGridViewTextBoxColumn IznosInfo;
         private DataGridViewTextBoxColumn UkupnoInfo;
         private DataGridViewButtonColumn Ukloni;
+        private CheckBox chbAktivan;
+        private Label label3;
+        private ComboBox cbSpol;
     }
 }

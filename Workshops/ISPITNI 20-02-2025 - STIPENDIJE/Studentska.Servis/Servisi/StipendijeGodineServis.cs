@@ -10,11 +10,14 @@ namespace Studentska.Servis.Servisi
 {
     public class StipendijeGodineServis : BaseServis<StipendijeGodineIB180079>
     {
+
+
         public List<StipendijeGodineIB180079> GetAllIncluded()
         {
             return _dbContext.Set<StipendijeGodineIB180079>()
                 .Include(x => x.Stipendija)
                 .ToList();
+
         }
 
         //public List<StipendijeGodineIB180079> GetAllIncludedWithFilter(string godina = "")
@@ -23,7 +26,6 @@ namespace Studentska.Servis.Servisi
         //        .Where(x => x.Godina == godina)
         //        .ToList();
         //}
-
 
 
     }

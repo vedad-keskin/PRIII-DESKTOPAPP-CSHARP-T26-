@@ -21,11 +21,13 @@
             _dbContext.SaveChanges();
         }
 
-        public void Delete(T obj)
+        public void Remove(T obj)
         {
             _dbContext.Set<T>().Remove(obj);
             _dbContext.SaveChanges();
         }
+
+
 
         public T? GetById(int id)
         {
