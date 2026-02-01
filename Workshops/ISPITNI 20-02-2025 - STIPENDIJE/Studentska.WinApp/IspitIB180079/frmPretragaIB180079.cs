@@ -34,7 +34,11 @@ namespace Studentska.WinApp.IspitIB180079
 
             var odabranaGodina = cbGodina?.SelectedItem?.ToString() ?? "";
 
-            var stipendijeGodine = stipendijeGodineServis.GetAllIncludedWithFilter(odabranaGodina);
+            //var stipendijeGodine = stipendijeGodineServis.GetAllIncludedWithFilter(odabranaGodina);
+
+            var stipendijeGodine = stipendijeGodineServis.GetAllIncluded()
+                .Where(x => x.Godina == odabranaGodina)
+                .ToList();
 
             cbStipendijaGodina.DataSource = stipendijeGodine;
 
