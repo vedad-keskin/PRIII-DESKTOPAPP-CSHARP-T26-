@@ -11,7 +11,18 @@
   </xs:annotation>
   <xs:element name="dsIzvjestaji" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsIzvjestaji" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsIzvjestaji">
     <xs:complexType>
-      <xs:choice minOccurs="0" maxOccurs="unbounded" />
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsStudentiKnjige" msprop:Generator_RowEvHandlerName="dsStudentiKnjigeRowChangeEventHandler" msprop:Generator_RowDeletedName="dsStudentiKnjigeRowDeleted" msprop:Generator_RowDeletingName="dsStudentiKnjigeRowDeleting" msprop:Generator_RowEvArgName="dsStudentiKnjigeRowChangeEvent" msprop:Generator_TablePropName="dsStudentiKnjige" msprop:Generator_RowChangedName="dsStudentiKnjigeRowChanged" msprop:Generator_RowChangingName="dsStudentiKnjigeRowChanging" msprop:Generator_TableClassName="dsStudentiKnjigeDataTable" msprop:Generator_RowClassName="dsStudentiKnjigeRow" msprop:Generator_TableVarName="tabledsStudentiKnjige" msprop:Generator_UserTableName="dsStudentiKnjige">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Rb" msprop:Generator_ColumnPropNameInRow="Rb" msprop:Generator_ColumnPropNameInTable="RbColumn" msprop:Generator_ColumnVarNameInTable="columnRb" msprop:Generator_UserColumnName="Rb" type="xs:string" minOccurs="0" />
+              <xs:element name="Knjiga" msprop:Generator_ColumnPropNameInRow="Knjiga" msprop:Generator_ColumnPropNameInTable="KnjigaColumn" msprop:Generator_ColumnVarNameInTable="columnKnjiga" msprop:Generator_UserColumnName="Knjiga" type="xs:string" minOccurs="0" />
+              <xs:element name="Vracena" msprop:Generator_ColumnPropNameInRow="Vracena" msprop:Generator_ColumnPropNameInTable="VracenaColumn" msprop:Generator_ColumnVarNameInTable="columnVracena" msprop:Generator_UserColumnName="Vracena" type="xs:string" minOccurs="0" />
+              <xs:element name="Broj" msprop:Generator_ColumnPropNameInRow="Broj" msprop:Generator_ColumnPropNameInTable="BrojColumn" msprop:Generator_ColumnVarNameInTable="columnBroj" msprop:Generator_UserColumnName="Broj" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
     </xs:complexType>
   </xs:element>
 </xs:schema>

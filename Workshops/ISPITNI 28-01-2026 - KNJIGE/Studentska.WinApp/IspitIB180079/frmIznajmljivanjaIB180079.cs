@@ -1,6 +1,7 @@
 ﻿using Studentska.Data.Entiteti;
 using Studentska.Data.IspitIB180079;
 using Studentska.Servis.Servisi;
+using Studentska.WinApp.Izvjestaji;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -126,7 +127,7 @@ namespace Studentska.WinApp.IspitIB180079
             for (int i = 0; i < sveKnjige.Count(); i++)
             {
 
-                if(!studentiKnjigeServis.GetAll().Exists(x => 
+                if (!studentiKnjigeServis.GetAll().Exists(x =>
                 x.StudentId == odabraniStudent.Id &&
                 x.KnjigaId == sveKnjige[i].Id
                 ))
@@ -153,7 +154,7 @@ namespace Studentska.WinApp.IspitIB180079
 
                 }
 
-                
+
             }
 
 
@@ -162,11 +163,22 @@ namespace Studentska.WinApp.IspitIB180079
 
                 txtInfo.Text = info;
                 UcitajStudentiKnjige();
-                MessageBox.Show($"Uspješno generisanje zaduženja","Informacija",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show($"Uspješno generisanje zaduženja", "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             };
             BeginInvoke(action);
 
+
+        }
+
+        private void btnPotvrda_Click(object sender, EventArgs e)
+        {
+
+            var odabraniStudent = cbStudent.SelectedItem as Student;
+
+            var frmIzvjestaj = new frmIzvjestaji(odabraniStudent);
+
+            frmIzvjestaj.ShowDialog();
 
         }
     }
