@@ -69,12 +69,14 @@ namespace Studentska.WinApp.IspitIB180079
                 else if (knjiga != null) // editovanje
                 {
 
-                    knjiga.Naziv = naziv;
-                    knjiga.Autor = autori;
-                    knjiga.BrojPrimjeraka = broj;
-                    knjiga.Slika = slika;
+                    var odabranaUntrackedKnjiga = knjigaServis.GetById(knjiga.Id);
 
-                    knjigaServis.Update(knjiga);
+                    odabranaUntrackedKnjiga.Naziv = naziv;
+                    odabranaUntrackedKnjiga.Autor = autori;
+                    odabranaUntrackedKnjiga.BrojPrimjeraka = broj;
+                    odabranaUntrackedKnjiga.Slika = slika;
+
+                    knjigaServis.Update(odabranaUntrackedKnjiga);
 
                     DialogResult = DialogResult.OK;
 

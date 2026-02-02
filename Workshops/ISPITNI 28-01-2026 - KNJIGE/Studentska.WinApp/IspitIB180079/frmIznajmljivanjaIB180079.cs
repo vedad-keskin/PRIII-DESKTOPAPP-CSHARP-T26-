@@ -66,7 +66,7 @@ namespace Studentska.WinApp.IspitIB180079
             var knjiga = cbKnjiga.SelectedItem as KnjigeIB180079;
 
 
-            if (studentiKnjigeServis.GetAll().Where(x => x.KnjigaId == knjiga.Id).ToList().Count() >= knjiga.BrojPrimjeraka)
+            if (studentiKnjigeServis.GetAll().Where(x => x.KnjigaId == knjiga.Id && x.Vracena == false).ToList().Count() >= knjiga.BrojPrimjeraka)
             {
                 MessageBox.Show("Prekoračen iznajmljeni broj primjeraka", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -180,6 +180,11 @@ namespace Studentska.WinApp.IspitIB180079
 
             frmIzvjestaj.ShowDialog();
 
+        }
+
+        private void frmIznajmljivanjaIB180079_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            DialogResult = DialogResult.OK;
         }
     }
 }

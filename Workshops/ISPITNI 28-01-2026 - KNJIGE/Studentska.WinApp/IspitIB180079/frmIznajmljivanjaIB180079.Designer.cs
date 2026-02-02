@@ -198,6 +198,7 @@
             Name = "frmIznajmljivanjaIB180079";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Iznajmljivanje knjiga";
+            FormClosed += frmIznajmljivanjaIB180079_FormClosed;
             Load += frmIznajmljivanjaIB180079_Load;
             ((System.ComponentModel.ISupportInitialize)dgvStudentiKnjige).EndInit();
             groupBox1.ResumeLayout(false);
