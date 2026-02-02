@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Studentska.Data.IspitIB180079;
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,7 @@ namespace Studentska.Servis.Servisi
         {
 
             return _dbContext.Set<StudentiKnjigeIB180079>()
+                .AsNoTracking()
                 .Include(x => x.Knjiga)
                 .Include(x => x.Student)
                 .ToList();
