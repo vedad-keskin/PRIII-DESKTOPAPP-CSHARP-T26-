@@ -15,6 +15,8 @@
             _dbContext.SaveChanges();
         }
 
+// Prosiriti bazni servis za ove dvije metode kako bi servisne klase imale mogućnost edita i brisanja
+
         public void Update(T obj)
         {
             _dbContext.Set<T>().Update(obj);
