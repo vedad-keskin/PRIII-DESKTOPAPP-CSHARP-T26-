@@ -15,6 +15,18 @@
             _dbContext.SaveChanges();
         }
 
+        public void Update(T obj)
+        {
+            _dbContext.Set<T>().Update(obj);
+            _dbContext.SaveChanges();
+        }
+
+        public void Remove(T obj)
+        {
+            _dbContext.Set<T>().Remove(obj);
+            _dbContext.SaveChanges();
+        }
+
         public T? GetById(int id)
         {
             return _dbContext.Set<T>().Find(id);
