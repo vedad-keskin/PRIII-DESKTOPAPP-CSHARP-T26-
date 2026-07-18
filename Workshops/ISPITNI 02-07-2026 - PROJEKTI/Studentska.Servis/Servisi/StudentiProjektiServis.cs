@@ -10,6 +10,7 @@ namespace Studentska.Servis.Servisi
         public List<StudentiProjektiIB180079> GetAllIncluded()
         {
             return _dbContext.Set<StudentiProjektiIB180079>()
+                .AsNoTracking()
                 .Include(x => x.Student)
                 .Include(x => x.Projekat)
                 .ToList();

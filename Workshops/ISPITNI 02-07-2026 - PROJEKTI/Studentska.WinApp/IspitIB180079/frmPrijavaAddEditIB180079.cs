@@ -149,32 +149,56 @@ namespace Studentska.WinApp.IspitIB180079
                 }
                 else // edit
                 {
-
-
-                    if(status == "PODNESENA") 
+                    // dozvoli PODNESENA samo ako je i prije bila PODNESENA (npr. samo promjena projekta)
+                    if (status == "PODNESENA" && odabranStudentProjekat.Status != "PODNESENA")
                     {
-                        MessageBox.Show("Status se ne može mijenati da PODNESENA","Upozorenje",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        MessageBox.Show("Status se ne može mijenati na PODNESENA", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (studentiProjektiServis.GetAll()
+                        .Exists(x => x.StudentId == student.Id
+                        && x.ProjekatId == projekat.Id
+                        && x.Arhivirana == false
+                        && x.Id != odabranStudentProjekat.Id))
+                    {
+                        MessageBox.Show($"Student {student} već ima aktivnu prijavu na projekat {projekat}", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (status == "PRIHVACENA" && studentiProjektiServis.GetAll()
+                        .Exists(x => x.StudentId == student.Id
+                        && x.Status == "PRIHVACENA"
+                        && x.Id != odabranStudentProjekat.Id))
+                    {
+                        MessageBox.Show($"Student {student} već ima prihvaćenu prijavu i ne može slati nove dok prethodna ne bude završena", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (status == "PRIHVACENA" && studentiProjektiServis.GetAll()
+                        .Count(x => x.ProjekatId == projekat.Id
+                        && x.Status == "PRIHVACENA"
+                        && x.Id != odabranStudentProjekat.Id) >= projekat.MaxBrojStudenata)
+                    {
+                        MessageBox.Show($"Nije moguće prihvatiti prijavu jer je dostignut maksimalan broj studenata ({projekat.MaxBrojStudenata}) na projektu {projekat}", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
 
-                        if(status == "ZAVRSENA")
+                        var odabranaUntrackedPrijava = studentiProjektiServis.GetById(odabranStudentProjekat.Id);
+
+
+                        if (odabranaUntrackedPrijava.Status != status)
                         {
-                            odabranStudentProjekat.Arhivirana = true;
+                            odabranaUntrackedPrijava.DatumPromjene = DateTime.Now; // iv
+
+                            if (status == "ZAVRSENA") // v
+                            {
+                                odabranaUntrackedPrijava.Arhivirana = true;
+                            }
                         }
 
-                        odabranStudentProjekat.DatumPromjene = DateTime.Now;
-                        odabranStudentProjekat.Status = status;
+                        odabranaUntrackedPrijava.ProjekatId = projekat.Id;
+                        odabranaUntrackedPrijava.Status = status; // iii
 
-                        studentiProjektiServis.Update(odabranStudentProjekat);
+                        studentiProjektiServis.Update(odabranaUntrackedPrijava);
 
                         DialogResult = DialogResult.OK;
-
-
                     }
-
-
-
                 }
 
 
