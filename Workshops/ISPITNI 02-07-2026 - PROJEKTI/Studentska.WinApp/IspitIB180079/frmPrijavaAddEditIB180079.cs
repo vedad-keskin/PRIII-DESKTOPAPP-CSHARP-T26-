@@ -72,7 +72,8 @@ namespace Studentska.WinApp.IspitIB180079
 
                     MessageBox.Show($"Student {student} već ima aktivnu prijavu na projekat {projekat}", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                }else if(studentiProjektiServis.GetAll()
+                }
+                else if(studentiProjektiServis.GetAll()
                     .Exists(x => x.StudentId == student.Id && x.Status == "PRIHVACENA"))
                 {
 

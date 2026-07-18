@@ -1,5 +1,6 @@
 ﻿using Studentska.Data.IspitIB180079;
 using Studentska.Servis.Servisi;
+using Studentska.WinApp.Izvjestaji;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace Studentska.WinApp.IspitIB180079
     public partial class frmPretragaIB180079 : Form
     {
         StudentiProjektiServis studentiProjektiServis = new StudentiProjektiServis();
+        List<StudentiProjektiIB180079> studentiProjekti;
         public frmPretragaIB180079()
         {
             InitializeComponent();
@@ -33,7 +35,7 @@ namespace Studentska.WinApp.IspitIB180079
 
             var stanje = cmbStanje.SelectedItem as string;
 
-            var studentiProjekti = studentiProjektiServis
+            studentiProjekti = studentiProjektiServis
                 .GetAllIncluded()
                 .Where(x => $"{x.Student.Ime} {x.Student.Prezime}".ToLower().Contains(pretraga) || x.Projekat.Naziv.ToLower().Contains(pretraga))
                 .Where(x => status == "Sve" || x.Status == status)
@@ -123,6 +125,13 @@ namespace Studentska.WinApp.IspitIB180079
                 UcitajStudentiProjekte();
 
             }
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            var frmIzvjestaj = new frmIzvjestaji(studentiProjekti);
+
+            frmIzvjestaj.ShowDialog();
         }
     }
 }

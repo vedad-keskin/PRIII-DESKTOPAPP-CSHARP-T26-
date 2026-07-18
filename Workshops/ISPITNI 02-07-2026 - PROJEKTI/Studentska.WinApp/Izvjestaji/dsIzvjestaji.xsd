@@ -11,7 +11,20 @@
   </xs:annotation>
   <xs:element name="dsIzvjestaji" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsIzvjestaji" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsIzvjestaji">
     <xs:complexType>
-      <xs:choice minOccurs="0" maxOccurs="unbounded" />
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dsStudentiProjekti" msprop:Generator_RowEvHandlerName="dsStudentiProjektiRowChangeEventHandler" msprop:Generator_RowDeletedName="dsStudentiProjektiRowDeleted" msprop:Generator_RowDeletingName="dsStudentiProjektiRowDeleting" msprop:Generator_RowEvArgName="dsStudentiProjektiRowChangeEvent" msprop:Generator_TablePropName="dsStudentiProjekti" msprop:Generator_RowChangedName="dsStudentiProjektiRowChanged" msprop:Generator_RowChangingName="dsStudentiProjektiRowChanging" msprop:Generator_TableClassName="dsStudentiProjektiDataTable" msprop:Generator_RowClassName="dsStudentiProjektiRow" msprop:Generator_TableVarName="tabledsStudentiProjekti" msprop:Generator_UserTableName="dsStudentiProjekti">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Rb" msprop:Generator_ColumnPropNameInRow="Rb" msprop:Generator_ColumnPropNameInTable="RbColumn" msprop:Generator_ColumnVarNameInTable="columnRb" msprop:Generator_UserColumnName="Rb" type="xs:string" minOccurs="0" />
+              <xs:element name="Student" msprop:Generator_ColumnPropNameInRow="Student" msprop:Generator_ColumnPropNameInTable="StudentColumn" msprop:Generator_ColumnVarNameInTable="columnStudent" msprop:Generator_UserColumnName="Student" type="xs:string" minOccurs="0" />
+              <xs:element name="Projekat" msprop:Generator_ColumnPropNameInRow="Projekat" msprop:Generator_ColumnPropNameInTable="ProjekatColumn" msprop:Generator_ColumnVarNameInTable="columnProjekat" msprop:Generator_UserColumnName="Projekat" type="xs:string" minOccurs="0" />
+              <xs:element name="Stanje" msprop:Generator_ColumnPropNameInRow="Stanje" msprop:Generator_ColumnPropNameInTable="StanjeColumn" msprop:Generator_ColumnVarNameInTable="columnStanje" msprop:Generator_UserColumnName="Stanje" type="xs:string" minOccurs="0" />
+              <xs:element name="RokZavrsetka" msprop:Generator_ColumnPropNameInRow="RokZavrsetka" msprop:Generator_ColumnPropNameInTable="RokZavrsetkaColumn" msprop:Generator_ColumnVarNameInTable="columnRokZavrsetka" msprop:Generator_UserColumnName="RokZavrsetka" type="xs:string" minOccurs="0" />
+              <xs:element name="BrojDana" msprop:Generator_ColumnPropNameInRow="BrojDana" msprop:Generator_ColumnPropNameInTable="BrojDanaColumn" msprop:Generator_ColumnVarNameInTable="columnBrojDana" msprop:Generator_UserColumnName="BrojDana" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
     </xs:complexType>
   </xs:element>
 </xs:schema>

@@ -222,6 +222,7 @@
             btnPrint.TabIndex = 4;
             btnPrint.Text = "Print";
             btnPrint.UseVisualStyleBackColor = true;
+            btnPrint.Click += btnPrint_Click;
             // 
             // frmPretragaIB180079
             // 
