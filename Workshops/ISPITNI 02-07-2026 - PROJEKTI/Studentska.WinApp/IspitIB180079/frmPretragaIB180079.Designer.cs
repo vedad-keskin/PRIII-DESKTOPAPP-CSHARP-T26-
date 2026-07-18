@@ -35,6 +35,9 @@
             cmbStatus = new ComboBox();
             cmbStanje = new ComboBox();
             dgvStudentiProjekti = new DataGridView();
+            btnNovaPrijava = new Button();
+            btnNoviProjekat = new Button();
+            btnPrint = new Button();
             Student = new DataGridViewTextBoxColumn();
             Projekat = new DataGridViewTextBoxColumn();
             RokZavrsetka = new DataGridViewTextBoxColumn();
@@ -43,9 +46,6 @@
             DatumPromjene = new DataGridViewTextBoxColumn();
             Stanje = new DataGridViewTextBoxColumn();
             Arhiviraj = new DataGridViewButtonColumn();
-            btnNovaPrijava = new Button();
-            btnNoviProjekat = new Button();
-            btnPrint = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvStudentiProjekti).BeginInit();
             SuspendLayout();
             // 
@@ -121,6 +121,36 @@
             dgvStudentiProjekti.TabIndex = 3;
             dgvStudentiProjekti.CellContentClick += dgvStudentiProjekti_CellContentClick;
             // 
+            // btnNovaPrijava
+            // 
+            btnNovaPrijava.Location = new Point(1219, 31);
+            btnNovaPrijava.Name = "btnNovaPrijava";
+            btnNovaPrijava.Size = new Size(159, 29);
+            btnNovaPrijava.TabIndex = 4;
+            btnNovaPrijava.Text = "Nova prijava";
+            btnNovaPrijava.UseVisualStyleBackColor = true;
+            btnNovaPrijava.Click += btnNovaPrijava_Click;
+            // 
+            // btnNoviProjekat
+            // 
+            btnNoviProjekat.Location = new Point(1054, 31);
+            btnNoviProjekat.Name = "btnNoviProjekat";
+            btnNoviProjekat.Size = new Size(159, 29);
+            btnNoviProjekat.TabIndex = 4;
+            btnNoviProjekat.Text = "Novi projekat";
+            btnNoviProjekat.UseVisualStyleBackColor = true;
+            btnNoviProjekat.Click += btnNoviProjekat_Click;
+            // 
+            // btnPrint
+            // 
+            btnPrint.Location = new Point(1219, 524);
+            btnPrint.Name = "btnPrint";
+            btnPrint.Size = new Size(159, 29);
+            btnPrint.TabIndex = 4;
+            btnPrint.Text = "Print";
+            btnPrint.UseVisualStyleBackColor = true;
+            btnPrint.Click += btnPrint_Click;
+            // 
             // Student
             // 
             Student.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -178,7 +208,7 @@
             // Stanje
             // 
             Stanje.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Stanje.DataPropertyName = "Stanje";
+            Stanje.DataPropertyName = "ArhiviranaStanje";
             Stanje.HeaderText = "Stanje prijave";
             Stanje.MinimumWidth = 6;
             Stanje.Name = "Stanje";
@@ -193,36 +223,6 @@
             Arhiviraj.Text = "Arhiviraj";
             Arhiviraj.UseColumnTextForButtonValue = true;
             Arhiviraj.Width = 125;
-            // 
-            // btnNovaPrijava
-            // 
-            btnNovaPrijava.Location = new Point(1219, 31);
-            btnNovaPrijava.Name = "btnNovaPrijava";
-            btnNovaPrijava.Size = new Size(159, 29);
-            btnNovaPrijava.TabIndex = 4;
-            btnNovaPrijava.Text = "Nova prijava";
-            btnNovaPrijava.UseVisualStyleBackColor = true;
-            btnNovaPrijava.Click += btnNovaPrijava_Click;
-            // 
-            // btnNoviProjekat
-            // 
-            btnNoviProjekat.Location = new Point(1054, 31);
-            btnNoviProjekat.Name = "btnNoviProjekat";
-            btnNoviProjekat.Size = new Size(159, 29);
-            btnNoviProjekat.TabIndex = 4;
-            btnNoviProjekat.Text = "Novi projekat";
-            btnNoviProjekat.UseVisualStyleBackColor = true;
-            btnNoviProjekat.Click += btnNoviProjekat_Click;
-            // 
-            // btnPrint
-            // 
-            btnPrint.Location = new Point(1219, 524);
-            btnPrint.Name = "btnPrint";
-            btnPrint.Size = new Size(159, 29);
-            btnPrint.TabIndex = 4;
-            btnPrint.Text = "Print";
-            btnPrint.UseVisualStyleBackColor = true;
-            btnPrint.Click += btnPrint_Click;
             // 
             // frmPretragaIB180079
             // 

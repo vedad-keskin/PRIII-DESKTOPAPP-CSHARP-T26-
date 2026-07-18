@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Forms;
 
 namespace Studentska.WinApp.IspitIB180079
@@ -59,21 +60,21 @@ namespace Studentska.WinApp.IspitIB180079
                 var status = cmbStatus.SelectedItem as string;
 
 
-                if(datumPrijave > projekat.RokZavrsetka)
+                if (datumPrijave > projekat.RokZavrsetka)
                 {
-                    MessageBox.Show("Datum prijave ne može biti veće od roka završetka projekta","Upozorenje",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    MessageBox.Show("Datum prijave ne može biti veće od roka završetka projekta", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
                 else if (studentiProjektiServis.GetAll()
-                    .Exists(x => x.StudentId == student.Id 
-                    && x.ProjekatId == projekat.Id 
-                    && x.Stanje == "Aktivna"))
+                    .Exists(x => x.StudentId == student.Id
+                    && x.ProjekatId == projekat.Id
+                    && x.Arhivirana == false))
                 {
 
                     MessageBox.Show($"Student {student} već ima aktivnu prijavu na projekat {projekat}", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
-                else if(studentiProjektiServis.GetAll()
+                else if (studentiProjektiServis.GetAll()
                     .Exists(x => x.StudentId == student.Id && x.Status == "PRIHVACENA"))
                 {
 
@@ -92,7 +93,7 @@ namespace Studentska.WinApp.IspitIB180079
                         DatumPrijave = datumPrijave,
                         Status = status,
                         //DatumPromjene = DateTime.Now, // moze se ovako pa da se ne stavlja datum promjene na nullable a moze se i staviti pa da se ovo pohranjuje tek kod edita
-                        Stanje = "Aktivna"
+                        Arhivirana = false
 
                     };
 
@@ -112,6 +113,83 @@ namespace Studentska.WinApp.IspitIB180079
         {
             return Validator.ValidanUnos(cmbProjekat, err, "Obavezno polje") &&
                 Validator.ValidanUnos(cmbStudent, err, "Obavezno polje");
+        }
+
+        private async void btnGenerisi_Click(object sender, EventArgs e)
+        {
+
+            var student = cmbStudent.SelectedItem as Student;
+
+            await Task.Run(() => GenerisiPrijave(student));
+
+        }
+
+        private void GenerisiPrijave(Student? student)
+        {
+
+
+            var aktivniProjekti = projektiServis.GetAll()
+                .Where(x => x.Aktivan == true && x.RokZavrsetka > DateTime.Now)
+                .ToList();
+
+            var info = "";
+
+            for (int i = 0; i < aktivniProjekti.Count(); i++)
+            {
+
+                if (!(studentiProjektiServis.GetAll().Exists(x => x.ProjekatId == aktivniProjekti[i].Id && x.StudentId == student.Id && x.Arhivirana == false)))
+                {
+
+                    Thread.Sleep(300);
+
+                    var noviStudentProjekat = new StudentiProjektiIB180079()
+                    {
+                        StudentId = student.Id,
+                        ProjekatId = aktivniProjekti[i].Id,
+                        DatumPrijave = DateTime.Now,
+                        Arhivirana = false,
+                        Status = "PODNESENA",
+                        DatumPromjene = DateTime.Now
+
+                    };
+
+                    info += $"Dodata prijava na projekat '{aktivniProjekti[i]}' - studentu {student}.{Environment.NewLine}";
+
+                    studentiProjektiServis.Add(noviStudentProjekat);
+
+                }
+
+
+            }
+
+
+
+
+            Action action = () =>
+            {
+
+                if (info == "")
+                {
+                    MessageBox.Show($"Generisanje za studenta {student} nije izvršeno jer ne zadvoljava zahtjeve generisanja", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show($"Generisanje uspješno završeno za studenta {student}", "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    txtInfo.Text = info;
+
+                }
+
+            };
+            BeginInvoke(action);
+
+
+
+        }
+
+        private void frmPrijavaAddEditIB180079_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult = DialogResult.OK;
         }
     }
 }

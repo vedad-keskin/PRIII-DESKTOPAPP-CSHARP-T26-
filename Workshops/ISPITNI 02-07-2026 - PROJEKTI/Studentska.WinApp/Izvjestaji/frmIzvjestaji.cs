@@ -44,7 +44,7 @@ namespace Studentska.WinApp.Izvjestaji
                 noviRed.Rb = (i + 1).ToString();
                 noviRed.Student = studentiProjekti[i].Student.ToString();
                 noviRed.Projekat = studentiProjekti[i].Projekat.ToString();
-                noviRed.Stanje = studentiProjekti[i].Stanje;
+                noviRed.Stanje = studentiProjekti[i].Arhivirana == true ? "Arhivirana" : "Aktivna";
                 noviRed.RokZavrsetka = studentiProjekti[i].RokZavrsetkaInfo.ToString("dd.MM.yyyy");
 
                 var broj = studentiProjekti[i].RokZavrsetkaInfo < DateTime.Now ? 0 : (studentiProjekti[i].RokZavrsetkaInfo - DateTime.Now).Days;
@@ -58,7 +58,7 @@ namespace Studentska.WinApp.Izvjestaji
 
             var rpc = new ReportParameterCollection();
 
-            float prosjek = suma / studentiProjekti.Count();
+            float prosjek = (float)suma / studentiProjekti.Count();
 
             rpc.Add(new ReportParameter("prosjek", prosjek.ToString("0.00")));
 

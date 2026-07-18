@@ -39,7 +39,9 @@ namespace Studentska.WinApp.IspitIB180079
                 .GetAllIncluded()
                 .Where(x => $"{x.Student.Ime} {x.Student.Prezime}".ToLower().Contains(pretraga) || x.Projekat.Naziv.ToLower().Contains(pretraga))
                 .Where(x => status == "Sve" || x.Status == status)
-                .Where(x => stanje == "Sve" || x.Stanje == stanje)
+                .Where(x => stanje == "Sve" || 
+                (stanje == "Aktivna" && x.Arhivirana == false) ||
+                (stanje == "Arhivirana" && x.Arhivirana == true))
                 .ToList();
 
 
@@ -81,13 +83,13 @@ namespace Studentska.WinApp.IspitIB180079
 
                 var odabranStudentProjekat = dgvStudentiProjekti.SelectedRows[0].DataBoundItem as StudentiProjektiIB180079;
 
-                if (odabranStudentProjekat.Stanje == "Arhivirana")
+                if (odabranStudentProjekat.Arhivirana == true)
                 {
                     MessageBox.Show("Prijava je već arhivirana", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
-                    odabranStudentProjekat.Stanje = "Arhivirana";
+                    odabranStudentProjekat.Arhivirana = true;
 
                     studentiProjektiServis.Update(odabranStudentProjekat);
 

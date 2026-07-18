@@ -39,7 +39,11 @@
             cmbStatus = new ComboBox();
             button1 = new Button();
             err = new ErrorProvider(components);
+            groupBox1 = new GroupBox();
+            txtInfo = new TextBox();
+            btnGenerisi = new Button();
             ((System.ComponentModel.ISupportInitialize)err).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -127,11 +131,41 @@
             // 
             err.ContainerControl = this;
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(txtInfo);
+            groupBox1.Location = new Point(23, 196);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(738, 277);
+            groupBox1.TabIndex = 4;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Generator info";
+            // 
+            // txtInfo
+            // 
+            txtInfo.Location = new Point(6, 26);
+            txtInfo.Multiline = true;
+            txtInfo.Name = "txtInfo";
+            txtInfo.Size = new Size(726, 245);
+            txtInfo.TabIndex = 0;
+            // 
+            // btnGenerisi
+            // 
+            btnGenerisi.Location = new Point(29, 148);
+            btnGenerisi.Name = "btnGenerisi";
+            btnGenerisi.Size = new Size(143, 29);
+            btnGenerisi.TabIndex = 5;
+            btnGenerisi.Text = "Generiši prijave";
+            btnGenerisi.UseVisualStyleBackColor = true;
+            btnGenerisi.Click += btnGenerisi_Click;
+            // 
             // frmPrijavaAddEditIB180079
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(776, 198);
+            ClientSize = new Size(775, 485);
+            Controls.Add(btnGenerisi);
+            Controls.Add(groupBox1);
             Controls.Add(button1);
             Controls.Add(dtpDatumPrijave);
             Controls.Add(cmbStatus);
@@ -143,8 +177,11 @@
             Controls.Add(label1);
             Name = "frmPrijavaAddEditIB180079";
             Text = "Nova prijava na projekat";
+            FormClosing += frmPrijavaAddEditIB180079_FormClosing;
             Load += frmPrijavaAddEditIB180079_Load;
             ((System.ComponentModel.ISupportInitialize)err).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -161,5 +198,8 @@
         private ComboBox cmbStatus;
         private Button button1;
         private ErrorProvider err;
+        private GroupBox groupBox1;
+        private TextBox txtInfo;
+        private Button btnGenerisi;
     }
 }

@@ -18,6 +18,9 @@ namespace Studentska.Data.IspitIB180079
         public string Status { get; set; }
         public DateTime? DatumPromjene { get; set; }
         public DateTime RokZavrsetkaInfo => Projekat?.RokZavrsetka ?? DateTime.Now;
-        public string Stanje { get; set; }
+        public bool Arhivirana { get; set; }
+
+        public string ArhiviranaStanje => Arhivirana == true ? "Arhivirana" : "Aktivna";
+
     }
 }
