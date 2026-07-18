@@ -75,6 +75,8 @@ namespace Studentska.WinApp.IspitIB180079
                 // 3) pravila iz zadatka
                 cmbStudent.Enabled = false; // i) student se ne smije mijenjati
 
+                dtpDatumPrijave.Enabled = false; // nije receno ali nema smisla da se mijenja datum prijave
+
                 if (odabranStudentProjekat.Status != "PODNESENA") // ii) projekat samo ako je PODNESENA
                 {
                     cmbProjekat.Enabled = false;
@@ -98,48 +100,84 @@ namespace Studentska.WinApp.IspitIB180079
                 var status = cmbStatus.SelectedItem as string;
 
 
-                if (datumPrijave > projekat.RokZavrsetka)
-                {
-                    MessageBox.Show("Datum prijave ne može biti veće od roka završetka projekta", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                }
-                else if (studentiProjektiServis.GetAll()
-                    .Exists(x => x.StudentId == student.Id
-                    && x.ProjekatId == projekat.Id
-                    && x.Arhivirana == false))
+                if(odabranStudentProjekat == null) // dodavanje 
                 {
 
-                    MessageBox.Show($"Student {student} već ima aktivnu prijavu na projekat {projekat}", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (datumPrijave > projekat.RokZavrsetka)
+                    {
+                        MessageBox.Show("Datum prijave ne može biti veće od roka završetka projekta", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                }
-                else if (studentiProjektiServis.GetAll()
-                    .Exists(x => x.StudentId == student.Id && x.Status == "PRIHVACENA"))
-                {
-
-                    MessageBox.Show($"Student {student} već ima prihvaćenu prijavu i ne može slati nove dok prethodna ne bude završena", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                }
-                else
-                {
-
-
-                    var noviStudentProjekat = new StudentiProjektiIB180079()
+                    }
+                    else if (studentiProjektiServis.GetAll()
+                        .Exists(x => x.StudentId == student.Id
+                        && x.ProjekatId == projekat.Id
+                        && x.Arhivirana == false))
                     {
 
-                        StudentId = student.Id,
-                        ProjekatId = projekat.Id,
-                        DatumPrijave = datumPrijave,
-                        Status = status,
-                        //DatumPromjene = DateTime.Now, // moze se ovako pa da se ne stavlja datum promjene na nullable a moze se i staviti pa da se ovo pohranjuje tek kod edita
-                        Arhivirana = false
+                        MessageBox.Show($"Student {student} već ima aktivnu prijavu na projekat {projekat}", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                    };
+                    }
+                    else if (studentiProjektiServis.GetAll()
+                        .Exists(x => x.StudentId == student.Id && x.Status == "PRIHVACENA"))
+                    {
 
-                    studentiProjektiServis.Add(noviStudentProjekat);
+                        MessageBox.Show($"Student {student} već ima prihvaćenu prijavu i ne može slati nove dok prethodna ne bude završena", "Upozorenje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                    DialogResult = DialogResult.OK;
+                    }
+                    else
+                    {
+
+
+                        var noviStudentProjekat = new StudentiProjektiIB180079()
+                        {
+
+                            StudentId = student.Id,
+                            ProjekatId = projekat.Id,
+                            DatumPrijave = datumPrijave,
+                            Status = status,
+                            //DatumPromjene = DateTime.Now, // moze se ovako pa da se ne stavlja datum promjene na nullable a moze se i staviti pa da se ovo pohranjuje tek kod edita
+                            Arhivirana = false
+
+                        };
+
+                        studentiProjektiServis.Add(noviStudentProjekat);
+
+                        DialogResult = DialogResult.OK;
+
+                    }
 
                 }
+                else // edit
+                {
+
+
+                    if(status == "PODNESENA") 
+                    {
+                        MessageBox.Show("Status se ne može mijenati da PODNESENA","Upozorenje",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+
+                        if(status == "ZAVRSENA")
+                        {
+                            odabranStudentProjekat.Arhivirana = true;
+                        }
+
+                        odabranStudentProjekat.DatumPromjene = DateTime.Now;
+                        odabranStudentProjekat.Status = status;
+
+                        studentiProjektiServis.Update(odabranStudentProjekat);
+
+                        DialogResult = DialogResult.OK;
+
+
+                    }
+
+
+
+                }
+
+
 
 
 
