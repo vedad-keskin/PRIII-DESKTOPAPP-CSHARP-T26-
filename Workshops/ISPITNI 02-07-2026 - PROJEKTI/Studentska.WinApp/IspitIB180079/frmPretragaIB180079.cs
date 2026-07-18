@@ -39,7 +39,7 @@ namespace Studentska.WinApp.IspitIB180079
                 .GetAllIncluded()
                 .Where(x => $"{x.Student.Ime} {x.Student.Prezime}".ToLower().Contains(pretraga) || x.Projekat.Naziv.ToLower().Contains(pretraga))
                 .Where(x => status == "Sve" || x.Status == status)
-                .Where(x => stanje == "Sve" || 
+                .Where(x => stanje == "Sve" ||
                 (stanje == "Aktivna" && x.Arhivirana == false) ||
                 (stanje == "Arhivirana" && x.Arhivirana == true))
                 .ToList();
@@ -134,6 +134,28 @@ namespace Studentska.WinApp.IspitIB180079
             var frmIzvjestaj = new frmIzvjestaji(studentiProjekti);
 
             frmIzvjestaj.ShowDialog();
+        }
+
+        private void dgvStudentiProjekti_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.ColumnIndex != 7)
+            {
+
+                var odabranStudentProjekat = dgvStudentiProjekti.SelectedRows[0].DataBoundItem as StudentiProjektiIB180079;
+
+                var frmEditPrijava = new frmPrijavaAddEditIB180079(odabranStudentProjekat);
+
+
+                if (frmEditPrijava.ShowDialog() == DialogResult.OK)
+                {
+
+                    UcitajStudentiProjekte();
+
+                }
+
+            }
+
         }
     }
 }

@@ -20,9 +20,17 @@ namespace Studentska.WinApp.IspitIB180079
         StudentiProjektiServis studentiProjektiServis = new StudentiProjektiServis();
         StudentServis studentServis = new StudentServis();
         ProjektiServis projektiServis = new ProjektiServis();
+        private StudentiProjektiIB180079? odabranStudentProjekat;
+
         public frmPrijavaAddEditIB180079()
         {
             InitializeComponent();
+        }
+
+        public frmPrijavaAddEditIB180079(StudentiProjektiIB180079? odabranStudentProjekat)
+        {
+            InitializeComponent();
+            this.odabranStudentProjekat = odabranStudentProjekat;
         }
 
         private void frmPrijavaAddEditIB180079_Load(object sender, EventArgs e)
@@ -35,15 +43,45 @@ namespace Studentska.WinApp.IspitIB180079
 
         private void UcitajInfo()
         {
-            cmbStatus.SelectedIndex = 0;
+            if(odabranStudentProjekat == null) // dodavanje
+            {
+                cmbStatus.SelectedIndex = 0;
 
-            cmbStatus.Enabled = false;
+                cmbStatus.Enabled = false;
 
-            cmbStudent.DataSource = studentServis.GetAll();
+                cmbStudent.DataSource = studentServis.GetAll();
 
-            cmbProjekat.DataSource = projektiServis.GetAll()
-                .Where(x => x.Aktivan == true)
-                .ToList();
+                cmbProjekat.DataSource = projektiServis.GetAll()
+                    .Where(x => x.Aktivan == true)
+                    .ToList();
+            }
+            else // editovanje
+            {
+                // 1) napuni comboboxeve
+                var studenti = studentServis.GetAll();
+                cmbStudent.DataSource = studenti;
+
+                var projekti = projektiServis.GetAll()
+                    .Where(x => x.Aktivan == true)
+                    .ToList();
+                cmbProjekat.DataSource = projekti;
+
+                // 2) selektuj ono što je već sačuvano (Find po Id, NE SelectedIndex!)
+                cmbStudent.SelectedItem = studenti.Find(x => x.Id == odabranStudentProjekat.StudentId);
+                cmbProjekat.SelectedItem = projekti.Find(x => x.Id == odabranStudentProjekat.ProjekatId);
+                cmbStatus.SelectedItem = odabranStudentProjekat.Status;
+                dtpDatumPrijave.Value = odabranStudentProjekat.DatumPrijave;
+
+                // 3) pravila iz zadatka
+                cmbStudent.Enabled = false; // i) student se ne smije mijenjati
+
+                if (odabranStudentProjekat.Status != "PODNESENA") // ii) projekat samo ako je PODNESENA
+                {
+                    cmbProjekat.Enabled = false;
+                }
+            }
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
